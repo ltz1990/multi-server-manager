@@ -7,7 +7,13 @@ import re
 import sys
 import codecs
 
-f = codecs.open("/Users/junyan/Documents/workspace/server_list/server_list.json","r","utf-8")
+LANGUAGE_RETURN = '[R. 返回]'
+LANGUAGE_EXIT = '[E. 退出]'
+LANGUAGE_ERROR = '错误 :'
+LANGUAGE_INPUT = '请选择 : '
+LANGUAGE_INPUT_ERROR = '请输入正确的选项!'
+
+f = codecs.open(sys.argv[1],"r","utf-8")
 jsonStr = f.read()
 root = json.loads(jsonStr)
 
@@ -17,20 +23,20 @@ nav = []
 def select(item, msg) :
     os.system('clear')
     if isinstance(item, dict):
-        print '[R. 返回]','[E. 退出]'
+        print LANGUAGE_EXIT,LANGUAGE_RETURN
         printNav()
         menuList = [name for name in item]
         for i in range(len(menuList)) :
             print str(i+1)+'.', menuList[i]
 
         if msg :
-            print '错误 :',msg
-        no = raw_input("请选择 : ")
+            print LANGUAGE_ERROR,msg
+        no = raw_input(LANGUAGE_INPUT)
 
         if re.match(r'^[0-9]+$',no) :
             index = int(no)-1
             if index<0 or index>=len(menuList) :
-                select(item,'请输入正确的选项!')
+                select(item,LANGUAGE_INPUT_ERROR)
             else :
                 selected = item[menuList[index]]
                 push(menuList[index], selected)
@@ -47,7 +53,7 @@ def select(item, msg) :
             sys.exit()
 
         else :
-            select(item,'请输入正确的选项!')
+            select(item,LANGUAGE_INPUT_ERROR)
     elif isinstance(item, unicode) or isinstance(item, str):
         if re.match(r'^\[.*\]$',item):
             print item
