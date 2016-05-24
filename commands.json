@@ -1,0 +1,10 @@
+{
+  "serverGroup1":{
+    "server1":"ssh user@host1",
+    "server2":"ssh user@host2"
+  },
+  "serverGroup2":{
+    "server3":"ssh user@host1",
+    "server4":"ssh user@host2"
+  }
+}
