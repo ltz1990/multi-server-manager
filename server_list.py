@@ -7,8 +7,8 @@ import re
 import sys
 import codecs
 
-LANGUAGE_RETURN = '[R. 返回]'
-LANGUAGE_EXIT = '[E. 退出]'
+LANGUAGE_RETURN = '\033[1;30;40m[R. 返回]\033[0m'
+LANGUAGE_EXIT = '\033[1;30;40m[E. 退出]\033[0m'
 LANGUAGE_ERROR = '错误 :'
 LANGUAGE_INPUT = '请选择 : '
 LANGUAGE_INPUT_ERROR = '请输入正确的选项!'
@@ -34,6 +34,7 @@ def select(item, msg) :
         no = raw_input(LANGUAGE_INPUT)
 
         if re.match(r'^[0-9]+$',no) :
+            print "loading..."
             index = int(no)-1
             if index<0 or index>=len(menuList) :
                 select(item,LANGUAGE_INPUT_ERROR)
@@ -60,7 +61,6 @@ def select(item, msg) :
         else :
             os.system(item)
         pop()
-        # 这里绝对不会为空
         select(stack[len(stack)-1],None)
 
 def push(name, value) :
@@ -72,10 +72,11 @@ def pop() :
     nav.pop()
 
 def printNav() :
+    sys.stdout.write('\033[1;32;40m')
     for m in nav :
         sys.stdout.write(m)
-    print ''
+    print '\033[0m'
 
 stack.append(root)
-nav.append('/')
+nav.append('root/')
 select(root, None)
