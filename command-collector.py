@@ -111,7 +111,7 @@ def select(item, msg) :
 
 def dump() :
     f.seek(0)
-    json.dump(root,f)
+    json.dump(root,f,ensure_ascii=False)
 
 def push(name, value) :
     stack.append(value)
