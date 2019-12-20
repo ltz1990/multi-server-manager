@@ -95,6 +95,7 @@ def select(item, msg) :
                     select(item,LANGUAGE_INPUT_ERROR)
                 else :
                     del(item[menuList[index]])
+                    dump()
                     select(item,LANGUAGE_INPUT_REMOVE_SUCCESS + cmd[1])
             else :
                 select(item, LANGUAGE_INPUT_R_HELP)
@@ -111,6 +112,7 @@ def select(item, msg) :
 
 def dump() :
     f.seek(0)
+    f.truncate()
     json.dump(root,f,ensure_ascii=False)
 
 def push(name, value) :
